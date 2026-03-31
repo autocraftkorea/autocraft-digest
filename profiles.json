@@ -1,0 +1,329 @@
+[
+  {
+    "profile_id": "prof_autohaus_chile_suv",
+    "customer_name": "Autohaus Chile",
+    "customer_country": "Chile",
+    "buyer_id": "buyer_autocraft",
+    "profile_active": true,
+    "notes": "Primary customer. Buys KIA Sportage diesel and Hyundai Tucson diesel in large volumes. Accepts wide year range 2011+. High mileage intentional — buys 55k to 330k km based on grade and price. Key metric is buying price vs resale margin in Chile.",
+    "makes": [
+      "기아",
+      "현대"
+    ],
+    "models": [
+      "스포티지",
+      "투싼"
+    ],
+    "fuel_types": [
+      "diesel"
+    ],
+    "transmissions": [
+      "auto"
+    ],
+    "model_year_min": 2011,
+    "model_year_max": null,
+    "mileage_target_km": 160000,
+    "mileage_max_km": 330000,
+    "price_target_krw": 7000000,
+    "price_max_krw": 17000000,
+    "grade_min": 4,
+    "grade_preferred_min": 6,
+    "max_lien_count": 0,
+    "max_mortgage_count": 0,
+    "flood_history_allowed": false,
+    "exclude_rental": false,
+    "exclude_commercial": false,
+    "exclude_accident": false,
+    "no_accident_preferred": false,
+    "colors_preferred": [
+      "흰색",
+      "은색",
+      "회색",
+      "검정"
+    ],
+    "colors_excluded": [],
+    "keyword_excludes": [
+      "인탁송금지"
+    ],
+    "keyword_flags": [
+      "침수",
+      "구조변경",
+      "전손"
+    ],
+    "source_platforms": [
+      "kcar",
+      "autohub"
+    ],
+    "weight_grade": 30,
+    "weight_mileage": 20,
+    "weight_price": 35,
+    "weight_year": 10,
+    "weight_accident": 5,
+    "max_results_per_digest": 20,
+    "near_miss_threshold": 0.3,
+    "near_miss_label_threshold": 0.55
+  },
+  {
+    "profile_id": "prof_autohaus_chile_premium",
+    "customer_name": "Autohaus Chile (Premium)",
+    "customer_country": "Chile",
+    "buyer_id": "buyer_autocraft",
+    "profile_active": true,
+    "notes": "Premium vehicles for Autohaus Chile. BMW 3 Series 320d diesel, KIA Carnival diesel, Hyundai Santa Fe diesel, KIA Sorento diesel, Jeep Cherokee/Renegade diesel. BMW 320d 2014-2018 is consistent target. Jeep Cherokee 2015-2016 also bought regularly.",
+    "makes": [
+      "기아",
+      "현대",
+      "BMW",
+      "지프"
+    ],
+    "models": [
+      "카니발",
+      "쏘렌토",
+      "싼타페",
+      "320d",
+      "체로키",
+      "레니게이드"
+    ],
+    "fuel_types": [
+      "diesel",
+      "gasoline"
+    ],
+    "transmissions": [
+      "auto"
+    ],
+    "model_year_min": 2013,
+    "model_year_max": null,
+    "mileage_target_km": 150000,
+    "mileage_max_km": 280000,
+    "price_target_krw": 7000000,
+    "price_max_krw": 20000000,
+    "grade_min": 5,
+    "grade_preferred_min": 7,
+    "max_lien_count": 0,
+    "max_mortgage_count": 0,
+    "flood_history_allowed": false,
+    "exclude_rental": false,
+    "exclude_commercial": false,
+    "exclude_accident": false,
+    "no_accident_preferred": false,
+    "colors_preferred": [
+      "흰색",
+      "은색",
+      "회색",
+      "검정"
+    ],
+    "colors_excluded": [],
+    "keyword_excludes": [
+      "인탁송금지"
+    ],
+    "keyword_flags": [
+      "침수",
+      "구조변경",
+      "미션"
+    ],
+    "source_platforms": [
+      "kcar",
+      "autohub"
+    ],
+    "weight_grade": 30,
+    "weight_mileage": 20,
+    "weight_price": 30,
+    "weight_year": 15,
+    "weight_accident": 5,
+    "max_results_per_digest": 10,
+    "near_miss_threshold": 0.35,
+    "near_miss_label_threshold": 0.6
+  },
+  {
+    "profile_id": "prof_wazanoon_ghana",
+    "customer_name": "Wazanoon Ghana",
+    "customer_country": "Ghana",
+    "buyer_id": "buyer_autocraft",
+    "profile_active": true,
+    "notes": "Buys KIA Morning gasoline, Hyundai Avante gasoline, newer KIA Sportage gasoline, newer Hyundai Tucson gasoline, Honda Accord, Honda CR-V. Prefers 2015+. White preferred. Gasoline only. Morning and Avante are bread and butter — higher volume at lower prices. Newer Sportage/Tucson gasoline are higher value purchases.",
+    "makes": [
+      "기아",
+      "현대",
+      "혼다"
+    ],
+    "models": [
+      "모닝",
+      "아반떼",
+      "스포티지",
+      "투싼",
+      "어코드",
+      "CR-V",
+      "시빅"
+    ],
+    "fuel_types": [
+      "gasoline"
+    ],
+    "transmissions": [
+      "auto",
+      "manual"
+    ],
+    "model_year_min": 2015,
+    "model_year_max": null,
+    "mileage_target_km": 120000,
+    "mileage_max_km": 220000,
+    "price_target_krw": 5500000,
+    "price_max_krw": 24000000,
+    "grade_min": 4,
+    "grade_preferred_min": 7,
+    "max_lien_count": 0,
+    "max_mortgage_count": 0,
+    "flood_history_allowed": false,
+    "exclude_rental": false,
+    "exclude_commercial": false,
+    "exclude_accident": false,
+    "no_accident_preferred": true,
+    "colors_preferred": [
+      "흰색",
+      "은색"
+    ],
+    "colors_excluded": [],
+    "keyword_excludes": [
+      "인탁송금지"
+    ],
+    "keyword_flags": [
+      "침수",
+      "구조변경"
+    ],
+    "source_platforms": [
+      "kcar",
+      "autohub"
+    ],
+    "weight_grade": 30,
+    "weight_mileage": 25,
+    "weight_price": 25,
+    "weight_year": 15,
+    "weight_accident": 5,
+    "max_results_per_digest": 12,
+    "near_miss_threshold": 0.35,
+    "near_miss_label_threshold": 0.6
+  },
+  {
+    "profile_id": "prof_dominican_rep_lpg",
+    "customer_name": "Dominican Republic (LPG)",
+    "customer_country": "Dominican Republic",
+    "buyer_id": "buyer_autocraft",
+    "profile_active": true,
+    "notes": "Hyundai Sonata LPG and KIA K5 LPG 2021+. LPG fuel is hard requirement.",
+    "makes": [
+      "현대",
+      "기아"
+    ],
+    "models": [
+      "쏘나타",
+      "K5"
+    ],
+    "fuel_types": [
+      "lpg"
+    ],
+    "transmissions": [
+      "auto"
+    ],
+    "model_year_min": 2020,
+    "model_year_max": null,
+    "mileage_target_km": 150000,
+    "mileage_max_km": 380000,
+    "price_target_krw": 9500000,
+    "price_max_krw": 14000000,
+    "grade_min": 5,
+    "grade_preferred_min": 7,
+    "max_lien_count": 0,
+    "max_mortgage_count": 0,
+    "flood_history_allowed": false,
+    "exclude_rental": false,
+    "exclude_commercial": false,
+    "exclude_accident": false,
+    "no_accident_preferred": true,
+    "colors_preferred": [
+      "흰색",
+      "은색",
+      "검정"
+    ],
+    "colors_excluded": [],
+    "keyword_excludes": [
+      "인탁송금지",
+      "경찰용",
+      "택시"
+    ],
+    "keyword_flags": [
+      "침수",
+      "구조변경"
+    ],
+    "source_platforms": [
+      "kcar",
+      "autohub"
+    ],
+    "weight_grade": 25,
+    "weight_mileage": 20,
+    "weight_price": 35,
+    "weight_year": 15,
+    "weight_accident": 5,
+    "max_results_per_digest": 8,
+    "near_miss_threshold": 0.35,
+    "near_miss_label_threshold": 0.6
+  },
+  {
+    "profile_id": "prof_dominican_rep_honda",
+    "customer_name": "Dominican Republic (Honda)",
+    "customer_country": "Dominican Republic",
+    "buyer_id": "buyer_autocraft",
+    "profile_active": true,
+    "notes": "Honda Accord gasoline only. Buying price up to 14M KRW.",
+    "makes": [
+      "혼다"
+    ],
+    "models": [
+      "어코드"
+    ],
+    "fuel_types": [
+      "gasoline"
+    ],
+    "transmissions": [
+      "auto"
+    ],
+    "model_year_min": 2020,
+    "model_year_max": null,
+    "mileage_target_km": 150000,
+    "mileage_max_km": 380000,
+    "price_target_krw": 11000000,
+    "price_max_krw": 14000000,
+    "grade_min": 5,
+    "grade_preferred_min": 7,
+    "max_lien_count": 0,
+    "max_mortgage_count": 0,
+    "flood_history_allowed": false,
+    "exclude_rental": false,
+    "exclude_commercial": false,
+    "exclude_accident": false,
+    "no_accident_preferred": true,
+    "colors_preferred": [
+      "흰색",
+      "은색",
+      "검정"
+    ],
+    "colors_excluded": [],
+    "keyword_excludes": [
+      "인탁송금지"
+    ],
+    "keyword_flags": [
+      "침수",
+      "구조변경"
+    ],
+    "source_platforms": [
+      "kcar",
+      "autohub"
+    ],
+    "weight_grade": 25,
+    "weight_mileage": 20,
+    "weight_price": 35,
+    "weight_year": 15,
+    "weight_accident": 5,
+    "max_results_per_digest": 5,
+    "near_miss_threshold": 0.35,
+    "near_miss_label_threshold": 0.6
+  }
+]
