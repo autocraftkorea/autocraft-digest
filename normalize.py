@@ -150,7 +150,24 @@ def normalise_autohub(filepath):
 
 if __name__=='__main__':
     data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),'data')
-    kcar_files = [f for f in os.listdir(data_dir) if f.startswith('KCAR_') and f.endswith('.csv')]
+    # Find all K-Car CSVs, then filter to the most recent date only
+    all_kcar = [f for f in os.listdir(data_dir) if f.startswith('KCAR_') and f.endswith('.csv')]
+    if all_kcar:
+        # Extract date portion from filename e.g. KCAR_20260331_A.csv -> 20260331
+        def extract_date(fname):
+            parts = fname.replace('.csv','').split('_')
+            for p in parts:
+                if p.isdigit() and len(p) == 8:
+                    return p
+            return '00000000'
+        latest_date = max(extract_date(f) for f in all_kcar)
+        kcar_files = [f for f in all_kcar if extract_date(f) == latest_date]
+        skipped = [f for f in all_kcar if extract_date(f) != latest_date]
+        if skipped:
+            print(f"  Skipping {len(skipped)} older K-Car file(s): {', '.join(skipped)}")
+        print(f"  Using K-Car files dated {latest_date}: {', '.join(kcar_files)}")
+    else:
+        kcar_files = []
     autohub_files = [f for f in os.listdir(data_dir) if f.endswith('.xlsx') and not f.startswith('WEEKLY') and not f.startswith('KCAR')]
     all_records = []
     for f in kcar_files:
