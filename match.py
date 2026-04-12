@@ -205,6 +205,7 @@ if __name__ == "__main__":
                 "source_record_id": v["source_record_id"],
                 "lot_number": v["lot_number"],
                 "source_platform": v["source_platform"],
+                "ingested_at": v.get("ingested_at"),
                 "auction_lane": v.get("auction_lane"),
                 "parking_location": v.get("parking_location"),
                 "full_vehicle_name": v.get("full_vehicle_name"),

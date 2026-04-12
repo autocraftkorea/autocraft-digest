@@ -1,0 +1,9 @@
+venv/
+*.pyc
+__pycache__/
+.DS_Store
+data/
+logs/
+pipeline.log
+normalised_vehicles.json
+match_results.json

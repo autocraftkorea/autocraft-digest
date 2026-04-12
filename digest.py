@@ -34,6 +34,12 @@ def clean_lane(v):
 def src_label(v):
     return {"kcar": "K-Car", "autohub": "Autohub"}.get(str(v).lower(), str(v).upper())
 
+def fmt_date(iso):
+    try:
+        return datetime.fromisoformat(iso.replace("Z", "+00:00")).strftime("%Y-%m-%d")
+    except Exception:
+        return "\u2014"
+
 def render(results, auction_date, total_vehicles):
     by_customer = {}
     for r in results:
@@ -92,6 +98,42 @@ def render(results, auction_date, total_vehicles):
         ".divider{height:6px;background:#f4f1eb;border-top:1px solid #e0dcd4;border-bottom:1px solid #e0dcd4}"
         ".ftr{background:#0d0d0b;color:#666;padding:18px 32px;font-family:monospace;font-size:11px;line-height:1.9}"
         ".ftr b{color:#aaa}"
+        # --- Filter bar styles ---
+        "#filter-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#f4f1eb;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:100}"
+        ".filter-btn{font-family:monospace;font-size:11px;padding:4px 14px;border:1px solid #bbb;border-radius:20px;background:#fff;color:#555;cursor:pointer;transition:all .15s}"
+        ".filter-btn:hover{background:#e8e4dc;color:#0d0d0b}"
+        ".filter-btn.active{background:#1a6b45;border-color:#1a6b45;color:#fff;font-weight:600}"
+        ".date-tag{font-family:monospace;font-size:10px;color:#aaa;margin-left:auto;white-space:nowrap}"
+    )
+
+    filter_js = (
+        "<script>"
+        "function filterPlatform(p){"
+        "document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});"
+        "document.getElementById('btn-'+p).classList.add('active');"
+        # Show/hide cards and track which customer sections have visible cards
+        "var wrap=document.querySelector('.wrap');"
+        "document.querySelectorAll('.cust').forEach(function(section){"
+        "var hasVisible=false;"
+        "section.querySelectorAll('.card').forEach(function(c){"
+        "var show=p==='all'||c.dataset.platform===p;"
+        "c.style.display=show?'':'none';"
+        "if(show)hasVisible=true;"
+        "});"
+        "section.style.display=hasVisible?'':'none';"
+        "});"
+        # Hide/show dividers: a divider should show only if the section after it is visible
+        # and it is not the first visible section
+        "var firstVisible=null;"
+        "wrap.querySelectorAll('.cust').forEach(function(s){"
+        "if(s.style.display!=='none'&&!firstVisible)firstVisible=s;"
+        "});"
+        "wrap.querySelectorAll('.divider').forEach(function(d){"
+        "var next=d.nextElementSibling;"
+        "while(next&&!next.classList.contains('cust'))next=next.nextElementSibling;"
+        "d.style.display=(next&&next.style.display!=='none'&&next!==firstVisible)?'':'none';"
+        "});}"
+        "</script>"
     )
 
     parts = []
@@ -99,7 +141,15 @@ def render(results, auction_date, total_vehicles):
         "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\">"
         "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"
         f"<title>Autocraft Korea \u2014 Auction Digest {auction_date}</title>"
-        f"<style>{css}</style></head><body><div class=\"wrap\">"
+        f"<style>{css}</style>"
+        f"{filter_js}"
+        "</head><body>"
+        "<div id=\"filter-bar\">"
+        "<button id=\"btn-all\" class=\"filter-btn active\" onclick=\"filterPlatform('all')\">All</button>"
+        "<button id=\"btn-kcar\" class=\"filter-btn\" onclick=\"filterPlatform('kcar')\">K-Car</button>"
+        "<button id=\"btn-autohub\" class=\"filter-btn\" onclick=\"filterPlatform('autohub')\">Autohub</button>"
+        "</div>"
+        "<div class=\"wrap\">"
         "<div class=\"hdr\">"
         "<div class=\"hdr-brand\">Autocraft Korea \u2014 Auction Intelligence</div>"
         "<div class=\"hdr-title\">Weekly auction <b>buyer digest</b></div>"
@@ -137,6 +187,8 @@ def render(results, auction_date, total_vehicles):
                 bd    = m["score_breakdown"]
                 nm    = m["is_near_miss"]
                 src   = src_label(m.get("source_platform", ""))
+                # --- CHANGE 1: capture raw platform key for data-platform attribute ---
+                platform_key = str(m.get("source_platform", "")).lower()
                 lot   = m.get("lot_number", "")
                 lane  = clean_lane(m.get("auction_lane"))
                 park  = m.get("parking_location") or "\u2014"
@@ -154,9 +206,12 @@ def render(results, auction_date, total_vehicles):
                 rb    = score_bg(sc)
                 rc    = score_color(sc)
                 tag   = '<span class="ntag">near-miss</span>' if nm else '<span class="stag">strong match</span>'
+                # --- CHANGE 2: format ingested_at as human-readable date ---
+                data_as_of = fmt_date(m.get("ingested_at", ""))
 
                 card = (
-                    f'<div class="card {cc}"><div class="card-body">'
+                    # CHANGE 1: data-platform attribute added to card div
+                    f'<div class="card {cc}" data-platform="{platform_key}"><div class="card-body">'
                     f'<div class="rc"><div class="rn">{rank}</div><div class="rl">rank</div>'
                     f'<div class="ring" style="background:{rb};color:{rc};border:1.5px solid {rc}80">{sc}</div></div>'
                     f'<div class="ic">'
@@ -192,6 +247,8 @@ def render(results, auction_date, total_vehicles):
                     f'</div></div>'
                     f'<div class="foot">'
                     f'<span class="lotref">{src} &middot; <b>Lot {lot}</b> &middot; {lane} &middot; Parking: {park}</span>'
+                    # CHANGE 2: "Data as of" label before the view button
+                    f'<span class="date-tag">Data as of: {data_as_of}</span>'
                     f'<a class="vbtn" href="{url}">View listing &rarr;</a>{tag}'
                     f'</div></div>'
                 )
@@ -217,7 +274,9 @@ def render(results, auction_date, total_vehicles):
 if __name__ == "__main__":
     base    = os.path.dirname(os.path.abspath(__file__))
     results = load_json(os.path.join(base, "match_results.json"))
-    html    = render(results, datetime.now().strftime("%Y-%m-%d"), 3042)
+    normalised = load_json(os.path.join(base, "normalised_vehicles.json"))
+    total_vehicles = len(normalised)
+    html    = render(results, datetime.now().strftime("%Y-%m-%d"), total_vehicles)
     out     = os.path.join(base, "digest.html")
     with open(out, "w", encoding="utf-8") as f:
         f.write(html)
