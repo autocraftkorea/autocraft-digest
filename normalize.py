@@ -58,6 +58,18 @@ def load_kcar_id_map(data_dir, filename):
     except Exception:
         return {}
 
+def load_autohub_id_map(data_dir, filename):
+    m = re.search(r'(\d{4})-(\d{2})-(\d{2})', filename)
+    if not m: return {}
+    date_token = m.group(1) + m.group(2) + m.group(3)
+    map_path = os.path.join(data_dir, f"autohub_ids_{date_token}.json")
+    if not os.path.exists(map_path): return {}
+    try:
+        with open(map_path, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
 def normalise_kcar(filepath):
     print(f"\n[K-Car] Reading: {filepath}")
     df = pd.read_csv(filepath, encoding='utf-8-sig', header=26, dtype=str, on_bad_lines='skip', engine='python')
@@ -127,7 +139,11 @@ def normalise_autohub(filepath):
     print(f"\n[Autohub] Reading: {filepath}")
     df = pd.read_excel(filepath, engine='openpyxl', dtype=str)
     print(f"[Autohub] Raw rows: {len(df)}")
+    id_map = load_autohub_id_map(os.path.dirname(filepath), os.path.basename(filepath))
+    if id_map:
+        print(f"[Autohub] Loaded {len(id_map)} listing-ID mappings")
     records = []
+    matched_ids = 0
     for _,row in df.iterrows():
         lot = str(row.get('출품번호','')).strip()
         if not lot or lot=='nan': continue
@@ -145,11 +161,18 @@ def normalise_autohub(filepath):
         except: mileage = None
         lane_raw = str(row.get('경매레인','')).strip()
         lane = lane_raw.replace('레인','').replace(' ','').strip() or None
+        ids = id_map.get(f"{lane}:{lot}", {}) if lane else {}
+        entry_id = ids.get('entry_id')
+        perf_id = ids.get('perf_id')
+        car_id = ids.get('car_id')
+        eval_date = ids.get('eval_date')
+        if entry_id and perf_id and car_id and eval_date: matched_ids += 1
         year_raw = str(row.get('연식','')).strip()
         try: model_year = int(year_raw[:4]) if year_raw and year_raw!='nan' else None
         except: model_year = None
         records.append({
             'source_platform':'autohub','source_record_id':f"autohub_{lot}",
+            'entry_id':entry_id,'perf_id':perf_id,'car_id':car_id,'eval_date':eval_date,
             'lot_number':lot,'auction_lane':lane,'auction_location':'Anseong',
             'parking_location':str(row.get('주차번호','')).strip() or None,
             'starting_price_krw':starting_price,
@@ -170,6 +193,8 @@ def normalise_autohub(filepath):
             'source_file':os.path.basename(filepath),'detail_page_fetched':False
         })
     print(f"[Autohub] Normalised records: {len(records)}")
+    if id_map:
+        print(f"[Autohub] Listing IDs attached: {matched_ids}/{len(records)}")
     return records
 
 if __name__=='__main__':

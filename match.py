@@ -180,7 +180,17 @@ def listing_url(v):
             )
         return "https://www.kcarauction.com/kcar/auction/weekly_auction/colAuction.do?PAGE_TYPE=wCfm&LANE_TYPE=A"
     elif v["source_platform"] == "autohub":
-        return f"https://www.sellcarauction.co.kr/auction/detail/{lot}"
+        entry_id = v.get("entry_id")
+        perf_id = v.get("perf_id")
+        car_id = v.get("car_id")
+        eval_date = v.get("eval_date")
+        if entry_id and perf_id and car_id and eval_date:
+            return (
+                "https://www.sellcarauction.co.kr/auction/list/view"
+                f"?lang=ko&entryId={entry_id}&perfId={perf_id}"
+                f"&carId={car_id}&evalDate={eval_date}"
+            )
+        return "https://www.sellcarauction.co.kr/auction/list?lang=ko&page=1&sortBy=entryNo"
     return ""
 
 if __name__ == "__main__":
