@@ -171,7 +171,14 @@ def generate_flags(v, p, breakdown):
 def listing_url(v):
     lot = v.get("lot_number", "")
     if v["source_platform"] == "kcar":
-        return f"https://www.kcarauction.com/auction/{lot}"
+        car_id = v.get("car_id")
+        auc_cd = v.get("auc_cd")
+        if car_id and auc_cd:
+            return (
+                "https://www.kcarauction.com/kcar/auction/weekly_detail/"
+                f"auction_detail_view.do?PAGE_TYPE=wCfm&CAR_ID={car_id}&AUC_CD={auc_cd}"
+            )
+        return "https://www.kcarauction.com/kcar/auction/weekly_auction/colAuction.do?PAGE_TYPE=wCfm&LANE_TYPE=A"
     elif v["source_platform"] == "autohub":
         return f"https://www.sellcarauction.co.kr/auction/detail/{lot}"
     return ""

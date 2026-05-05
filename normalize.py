@@ -46,6 +46,18 @@ def check_no_accident(val):
     if not val or str(val)=='nan': return None
     return str(val).strip()=='무사고'
 
+def load_kcar_id_map(data_dir, filename):
+    parts = filename.replace('.csv','').split('_')
+    date_token = next((p for p in parts if p.isdigit() and len(p)==8), None)
+    if not date_token: return {}
+    map_path = os.path.join(data_dir, f"kcar_ids_{date_token}.json")
+    if not os.path.exists(map_path): return {}
+    try:
+        with open(map_path, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
 def normalise_kcar(filepath):
     print(f"\n[K-Car] Reading: {filepath}")
     df = pd.read_csv(filepath, encoding='utf-8-sig', header=26, dtype=str, on_bad_lines='skip', engine='python')
@@ -55,10 +67,19 @@ def normalise_kcar(filepath):
         if i < len(current): current[i] = n
     df.columns = current
     print(f"[K-Car] Raw rows: {len(df)}")
+    id_map = load_kcar_id_map(os.path.dirname(filepath), os.path.basename(filepath))
+    if id_map:
+        print(f"[K-Car] Loaded {len(id_map)} CAR_ID/AUC_CD mappings")
     records = []
+    matched_ids = 0
     for _,row in df.iterrows():
         lot = str(row.get('lot','')).strip()
         if not lot or lot=='nan': continue
+        lane = str(row.get('lane','')).strip() or None
+        ids = id_map.get(f"{lane}:{lot}", {}) if lane else {}
+        car_id = ids.get('car_id')
+        auc_cd = ids.get('auc_cd')
+        if car_id and auc_cd: matched_ids += 1
         price_raw = str(row.get('price','')).strip().replace(',','')
         try: starting_price = int(float(price_raw)) if price_raw and price_raw!='nan' else None
         except: starting_price = None
@@ -75,7 +96,8 @@ def normalise_kcar(filepath):
         exterior_count = int(exterior_raw) if exterior_raw.isdigit() else None
         records.append({
             'source_platform':'kcar','source_record_id':f"kcar_{lot}",
-            'lot_number':lot,'auction_lane':str(row.get('lane','')).strip() or None,
+            'car_id':car_id,'auc_cd':auc_cd,
+            'lot_number':lot,'auction_lane':lane,
             'auction_location':str(row.get('location','')).strip() or None,
             'parking_location':str(row.get('parking','')).strip() or None,
             'starting_price_krw':starting_price,'full_vehicle_name':name_str or None,
@@ -97,6 +119,8 @@ def normalise_kcar(filepath):
             'source_file':os.path.basename(filepath),'detail_page_fetched':False
         })
     print(f"[K-Car] Normalised records: {len(records)}")
+    if id_map:
+        print(f"[K-Car] CAR_ID/AUC_CD attached: {matched_ids}/{len(records)}")
     return records
 
 def normalise_autohub(filepath):
