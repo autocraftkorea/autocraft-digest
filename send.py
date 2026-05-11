@@ -18,10 +18,8 @@ BUYERS = [
         "email":     "jaffer.h1220@gmail.com",
         "customers": [
             "Autohaus Chile",
-            "Autohaus Chile (Premium)",
             "Wazanoon Ghana",
-            "Dominican Republic (LPG)",
-            "Dominican Republic (Honda)",
+            "Dominican Republic",
         ]
     }
 ]
