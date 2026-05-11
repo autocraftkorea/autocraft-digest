@@ -51,10 +51,10 @@ def passes_hard_filters(v, p):
     if p.get("colors_excluded") and v.get("color"):
         if any(c in str(v["color"]) for c in p["colors_excluded"]):
             return False, ["colour excluded"]
-    if p.get("keyword_excludes") and v.get("special_notes"):
-        notes = str(v["special_notes"])
+    if p.get("keyword_excludes"):
+        haystack = " ".join(str(v[f]) for f in ("special_notes", "full_vehicle_name") if v.get(f))
         for kw in p["keyword_excludes"]:
-            if kw in notes:
+            if kw in haystack:
                 return False, [f"keyword excluded: {kw}"]
     return True, []
 
