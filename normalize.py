@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 import json, os, re
 
 KCAR_GRADE_MAP = {'A1':9,'A2':8,'A3':7,'A4':6,'A6':5,'A7':4,'B1':6,'B2':5,'B6':3,'B7':3,'C1':4,'C2':3,'D1':2,'F1':2,'F2':1,'F5':1}
@@ -127,7 +127,7 @@ def normalise_kcar(filepath):
             'exterior_panel_count':exterior_count,'no_accident':check_no_accident(exchange_raw),
             'special_notes':str(row.get('notes','')).strip() or None,
             'lien_count':None,'mortgage_count':None,'flood_history':None,'vin':None,
-            'ingested_at':datetime.utcnow().isoformat(),
+            'ingested_at':datetime.now(timezone.utc).replace(tzinfo=None).isoformat(),
             'source_file':os.path.basename(filepath),'detail_page_fetched':False
         })
     print(f"[K-Car] Normalised records: {len(records)}")
@@ -189,7 +189,7 @@ def normalise_autohub(filepath):
             'accident_panels_exchanged':None,'accident_panels_repaired':None,
             'exterior_panel_count':None,'no_accident':None,'special_notes':None,
             'lien_count':None,'mortgage_count':None,'flood_history':None,'vin':None,
-            'battery_soh_pct':battery_soh,'ingested_at':datetime.utcnow().isoformat(),
+            'battery_soh_pct':battery_soh,'ingested_at':datetime.now(timezone.utc).replace(tzinfo=None).isoformat(),
             'source_file':os.path.basename(filepath),'detail_page_fetched':False
         })
     print(f"[Autohub] Normalised records: {len(records)}")

@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 def load_json(path):
     with open(path, encoding="utf-8") as f:
@@ -242,7 +242,7 @@ if __name__ == "__main__":
                 "flags": flags,
                 "is_near_miss": is_near_miss,
                 "listing_url": listing_url(v),
-                "matched_at": datetime.utcnow().isoformat()
+                "matched_at": datetime.now(timezone.utc).replace(tzinfo=None).isoformat()
             })
 
         passed.sort(key=lambda x: x["match_score"], reverse=True)
