@@ -70,9 +70,24 @@ def load_autohub_id_map(data_dir, filename):
     except Exception:
         return {}
 
+def find_kcar_header_row(filepath):
+    # K-Car exports carry a variable-length preamble (disclaimer text wraps
+    # differently week to week), so locate the header row by content instead
+    # of a fixed offset. Falls back to the historical default if not found.
+    try:
+        with open(filepath, encoding='utf-8-sig') as f:
+            for i, line in enumerate(f):
+                if line.lstrip('﻿').startswith('레인구분'):
+                    return i
+    except Exception:
+        pass
+    return 26
+
 def normalise_kcar(filepath):
     print(f"\n[K-Car] Reading: {filepath}")
-    df = pd.read_csv(filepath, encoding='utf-8-sig', header=26, dtype=str, on_bad_lines='skip', engine='python')
+    header_row = find_kcar_header_row(filepath)
+    print(f"[K-Car] Header row detected at line {header_row + 1}")
+    df = pd.read_csv(filepath, encoding='utf-8-sig', header=header_row, dtype=str, on_bad_lines='skip', engine='python')
     col_names = ['lane','lot','location','name','reg_no','price','first_reg','mileage','transmission','fuel','color','accident_exchange','accident_repair','exterior_panels','notes','usage','grade','parking']
     current = list(df.columns)
     for i,n in enumerate(col_names):
