@@ -5,16 +5,23 @@
     "customer_country": "Chile",
     "buyer_id": "buyer_autocraft",
     "profile_active": true,
-    "notes": "Updated 2026-05-11 from TARGET MAY 2026 V1.xlsx (CHILE tab). KIA Sportage 2011-2019 (most volume), Hyundai Tucson 2011-2015 + 2020-2021, BMW X3 2014-2015. ATM only. Diesel only. Sun roof preferred but not required (pricing differs). Original alloy wheels required. BMW X3 must not be silver (enforce manually — profile-level color exclusion would also drop silver Sportage/Tucson). 52 unit target.",
+    "notes": "Updated 2026-05-11 from TARGET MAY 2026 V1.xlsx (CHILE tab). KIA Sportage 2011-2019 (most volume), Hyundai Tucson 2011-2015 + 2020-2021, BMW X3 2014-2015. ATM only. Diesel only. Sun roof preferred but not required (pricing differs). Original alloy wheels required. BMW X3 must not be silver (enforce manually — profile-level color exclusion would also drop silver Sportage/Tucson). 52 unit target. Adjusted 2026-07-02 from AUCTION REPORT bid tracker: year_min 2011->2010 and grade_min 4->3 (recent wins included 2010 units and grade C2/F1 units that the old floors would have hard-excluded). Added models bid on since update: QM3 (+르노 make, 3 wins), 카니발/Carnival (1 win), K5 (1 win), X4 (1 win); 3시리즈 and 포터 added as look-only (bid, not won).",
     "makes": [
       "기아",
       "현대",
-      "BMW"
+      "BMW",
+      "르노"
     ],
     "models": [
       "스포티지",
       "투싼",
-      "X3"
+      "X3",
+      "QM3",
+      "카니발",
+      "K5",
+      "X4",
+      "3시리즈",
+      "포터"
     ],
     "fuel_types": [
       "diesel"
@@ -22,13 +29,13 @@
     "transmissions": [
       "auto"
     ],
-    "model_year_min": 2011,
+    "model_year_min": 2010,
     "model_year_max": null,
     "mileage_target_km": 160000,
     "mileage_max_km": 330000,
     "price_target_krw": 6500000,
     "price_max_krw": 17000000,
-    "grade_min": 4,
+    "grade_min": 3,
     "grade_preferred_min": 6,
     "max_lien_count": 0,
     "max_mortgage_count": 0,
@@ -72,7 +79,7 @@
     "customer_country": "Dominican Republic",
     "buyer_id": "buyer_autocraft",
     "profile_active": true,
-    "notes": "Updated 2026-05-11 from TARGET MAY 2026 V1.xlsx (REP DEM tab). Hyundai Sonata LPG + KIA K5 LPG (2021, ATM, ~9.2M); Hyundai Porter + KIA K2700 (2021, MANUAL, diesel, refrigerator-equipped, ~12.9–14.3M). 4 unit target. Honda Accord dropped — no longer in customer's list.",
+    "notes": "Updated 2026-05-11 from TARGET MAY 2026 V1.xlsx (REP DEM tab). Hyundai Sonata LPG + KIA K5 LPG (2021, ATM, ~9.2M); Hyundai Porter + KIA K2700 (2021, MANUAL, diesel, refrigerator-equipped, ~12.9–14.3M). 4 unit target. Honda Accord dropped — no longer in customer's list. Adjusted 2026-07-02 from AUCTION REPORT bid tracker: added Bongo (봉고), the KIA commercial-truck equivalent of Porter/K2700, seen in recent wins. Small sample — monitor. Also added 모닝/Morning (bid 3x, 1 win since update).",
     "makes": [
       "현대",
       "기아"
@@ -81,7 +88,9 @@
       "쏘나타",
       "K5",
       "포터",
-      "K2700"
+      "K2700",
+      "봉고",
+      "모닝"
     ],
     "fuel_types": [
       "lpg",
@@ -140,7 +149,7 @@
     "customer_country": "Ghana",
     "buyer_id": "buyer_autocraft",
     "profile_active": true,
-    "notes": "Updated 2026-05-11 from TARGET MAY 2026 V1.xlsx (GHANA tab). KIA Morning (12 units, ~4.8M), Hyundai Accent (2 units, ~5.2M), Hyundai i30/i40 (3 units, ~6.5M). 2016+ only, ATM, gasoline. 17 unit target. Old models (Sportage, Tucson, Avante, Honda Accord, CR-V, Civic) dropped — no longer in customer's list.",
+    "notes": "Updated 2026-05-11 from TARGET MAY 2026 V1.xlsx (GHANA tab). KIA Morning (12 units, ~4.8M), Hyundai Accent (2 units, ~5.2M), Hyundai i30/i40 (3 units, ~6.5M). 2016+ only, ATM, gasoline. 17 unit target. Old models (Sportage, Tucson, Avante, Honda Accord, CR-V, Civic) dropped — no longer in customer's list. Adjusted 2026-07-02 from AUCTION REPORT bid tracker: added beige+black to colors_preferred (most recent Morning wins were beige/black, previously only white/silver flagged). Re-added 아반떼/Avante (was previously dropped) — customer resumed bidding on it since the update (2 bids, 0 wins so far).",
     "makes": [
       "기아",
       "현대"
@@ -149,7 +158,8 @@
       "모닝",
       "엑센트",
       "i30",
-      "i40"
+      "i40",
+      "아반떼"
     ],
     "fuel_types": [
       "gasoline"
@@ -174,7 +184,9 @@
     "no_accident_preferred": true,
     "colors_preferred": [
       "흰색",
-      "은색"
+      "은색",
+      "검정",
+      "베이지"
     ],
     "colors_excluded": [],
     "keyword_excludes": [
