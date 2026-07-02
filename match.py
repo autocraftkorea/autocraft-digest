@@ -226,6 +226,7 @@ if __name__ == "__main__":
                 "auction_lane": v.get("auction_lane"),
                 "parking_location": v.get("parking_location"),
                 "full_vehicle_name": v.get("full_vehicle_name"),
+                "full_vehicle_name_en": v.get("full_vehicle_name_en"),
                 "model_year": v.get("model_year"),
                 "mileage_km": v.get("mileage_km"),
                 "starting_price_krw": v.get("starting_price_krw"),

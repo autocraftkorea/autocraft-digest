@@ -193,7 +193,7 @@ def render(results, auction_date, total_vehicles):
                 lane  = clean_lane(m.get("auction_lane"))
                 park  = m.get("parking_location") or "\u2014"
                 url   = m.get("listing_url", "#")
-                name  = str(m.get("full_vehicle_name") or "")
+                name  = str(m.get("full_vehicle_name_en") or m.get("full_vehicle_name") or "")
                 year  = m.get("model_year", "\u2014")
                 mil   = f"{m['mileage_km']:,} km" if m.get("mileage_km") else "\u2014"
                 price = fmt_price(m.get("starting_price_krw"))

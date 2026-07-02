@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime, timezone
 import json, os, re
+from translate import translate_name
 
 KCAR_GRADE_MAP = {'A1':9,'A2':8,'A3':7,'A4':6,'A6':5,'A7':4,'B1':6,'B2':5,'B6':3,'B7':3,'C1':4,'C2':3,'D1':2,'F1':2,'F2':1,'F5':1}
 AUTOHUB_GRADE_MAP = {'AA':10,'AB':9,'AC':8,'AD':7,'AF':6,'BA':8,'BB':7,'BC':6,'BD':5,'BF':5,'CA':6,'CB':5,'CC':4,'CD':3,'CF':3,'DA':4,'DB':3,'DC':2,'FA':2,'FB':2,'FC':1,'FF':1}
@@ -128,6 +129,7 @@ def normalise_kcar(filepath):
             'auction_location':str(row.get('location','')).strip() or None,
             'parking_location':str(row.get('parking','')).strip() or None,
             'starting_price_krw':starting_price,'full_vehicle_name':name_str or None,
+            'full_vehicle_name_en':translate_name(name_str) or None,
             'make':parse_make(name_str),'model':parse_model(name_str),
             'model_year':model_year,'first_registration_date':first_reg,
             'registration_number':str(row.get('reg_no','')).strip() or None,
@@ -192,6 +194,7 @@ def normalise_autohub(filepath):
             'parking_location':str(row.get('주차번호','')).strip() or None,
             'starting_price_krw':starting_price,
             'full_vehicle_name':str(row.get('차명','')).strip() or None,
+            'full_vehicle_name_en':translate_name(str(row.get('차명','')).strip()) or None,
             'make':parse_make(row.get('차명')),'model':parse_model(row.get('차명')),
             'model_year':model_year,'first_registration_date':parse_date(row.get('최초등록일')),
             'registration_number':str(row.get('차량번호','')).strip() or None,
